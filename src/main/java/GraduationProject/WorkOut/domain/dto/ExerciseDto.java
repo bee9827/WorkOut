@@ -13,7 +13,8 @@ import java.util.List;
 public class ExerciseDto {
 
     private Integer exercise_id;
-    private String name;
+    private String typeName;
+
     private LocalTime targetTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -23,7 +24,7 @@ public class ExerciseDto {
 
     public ExerciseDto(Exercise exercise) {
         this.exercise_id = exercise.getId();
-        this.name = exercise.getType().getName();
+        this.typeName = exercise.getType().getName().toString();
         this.targetTime = exercise.getTargetTime();
         this.startTime = exercise.getStartTime();
         this.endTime = exercise.getEndTime();

@@ -19,7 +19,5 @@ public class Type {
     @OneToMany(mappedBy = "type")
     private List<Exercise> exercise;
 
-    private String name;
-
-
+    private TypeStatus name;
 }
