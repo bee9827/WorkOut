@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 public class ExerciseDto {
 
+    private Integer exercise_id;
     private String name;
     private LocalTime targetTime;
     private LocalDateTime startTime;
@@ -21,6 +22,7 @@ public class ExerciseDto {
     private Integer totalCount;
 
     public ExerciseDto(Exercise exercise) {
+        this.exercise_id = exercise.getId();
         this.name = exercise.getType().getName();
         this.targetTime = exercise.getTargetTime();
         this.startTime = exercise.getStartTime();
