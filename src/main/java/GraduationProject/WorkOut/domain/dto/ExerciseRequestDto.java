@@ -17,9 +17,4 @@ public class ExerciseRequestDto {
     private Integer typeId;
     private ExerciseDto exerciseDto;
     private List<DetailDto> detailDtos;
-
-    public ExerciseRequestDto(Exercise exercise) {
-        memberId = exercise.getMember().getMemberId();
-
-    }
 }

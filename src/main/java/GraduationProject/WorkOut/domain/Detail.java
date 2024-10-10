@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -14,16 +17,14 @@ public class Detail {
     @GeneratedValue
     private Integer detailId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="exercise_id")
-    @Setter
-    private Exercise exercise;
-
     @OneToOne(cascade = CascadeType.ALL)
     private PoseLandmark poseLandmark;
 
     private Integer count;
-    private String passedTime;
+    private LocalDateTime passedTime;
 
+
+    public void update(LocalDateTime passedTime) {
+        this.passedTime = passedTime;
+    }
 }

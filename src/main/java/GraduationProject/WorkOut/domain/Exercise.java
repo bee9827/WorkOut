@@ -31,7 +31,8 @@ public class Exercise {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Video video;
 
-    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "exercise_id")
     private List<Detail> details = new ArrayList<>();
 
     private LocalTime targetTime;
@@ -42,29 +43,32 @@ public class Exercise {
     private Integer totalCount;
 
     public void setType(Type type) {
-       this.type = type;
-       type.getExercise().add(this);
+        if(type != null) {
+            this.type = type;
+            type.getExercise().add(this);
+        }
     }
 
     public void addDetails(List<Detail> details) {
         if (details != null) {
-            details.forEach(detail -> detail.setExercise(this));
             this.details.addAll(details);
         }
     }
 
     @Builder
     public Exercise(Type type, Member member, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
-        this.type = type;
-        this.type.getExercise().add(this);
+        setType(type);
+        addDetails(details);
         this.member = member;
         this.video = video;
-        addDetails(details);
         this.targetTime = targetTime;
         this.startTime = startTime;
         this.endTime = endTime;
         this.targetCount = targetCount;
         this.totalCount = totalCount;
+    }
+    public void update(Type type) {
+        setType(type);
     }
 
 }

@@ -4,10 +4,7 @@ import GraduationProject.WorkOut.domain.Detail;
 import GraduationProject.WorkOut.domain.Exercise;
 import GraduationProject.WorkOut.domain.Member;
 import GraduationProject.WorkOut.domain.Type;
-import GraduationProject.WorkOut.domain.dto.DetailDto;
-import GraduationProject.WorkOut.domain.dto.ExerciseDto;
-import GraduationProject.WorkOut.domain.dto.ExerciseRequestDto;
-import GraduationProject.WorkOut.domain.dto.ExerciseResponseDto;
+import GraduationProject.WorkOut.domain.dto.*;
 import GraduationProject.WorkOut.repository.DetailRepository;
 import GraduationProject.WorkOut.repository.ExerciseRepository;
 import GraduationProject.WorkOut.repository.MemberRepository;
@@ -17,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -28,22 +27,17 @@ public class ExerciseService {
     private final TypeRepository typeRepository;
     private final DetailRepository detailRepository;
 
-    public ExerciseResponseDto findAll(Integer member_id, LocalDate month) {
-        List<ExerciseDto> exercises = exerciseRepository
-                .findAllByMemberIdAndMonth(
-                        member_id, month)
-                .stream()
-                .map(ExerciseDto::new)
-                .toList();
-
-        return new ExerciseResponseDto(
-                member_id,
-                exercises.size(),
-                exercises);
+    public ExerciseListDto findAll(Integer member_id, LocalDate month) {
+        List<Exercise> exercises = exerciseRepository.findAllByMemberIdAndMonth(member_id, month);
+        return new ExerciseListDto(exercises.stream().map(ExerciseResponseDto::new).toList());
+    }
+    public DetailResponseDto findAllDetailByExerciseId(Integer exerciseId) {
+        Exercise exercise = exerciseRepository.findById(exerciseId).orElse(null);
+        return new DetailResponseDto(Objects.requireNonNull(exercise));
     }
 
     @Transactional
-    public Integer save(ExerciseRequestDto requestDto) {
+    public DetailResponseDto save(ExerciseRequestDto requestDto) {
         Member member = memberRepository
                 .findById(requestDto.getMemberId())
                 .get();
@@ -63,6 +57,22 @@ public class ExerciseService {
         exercise.addDetails(details);
         exerciseRepository.save(exercise);
 
-        return exercise.getExerciseId();
+        return new DetailResponseDto(exercise);
+    }
+
+    @Transactional
+    public DetailResponseDto update(ExerciseRequestDto requestDto) {
+        Exercise exercise = exerciseRepository.findById(requestDto.getExerciseDto().getExerciseId()).get();
+        Type type = typeRepository.findById(requestDto.getTypeId()).get();
+        exercise.update(type);
+
+        List<Detail> details = exercise.getDetails();
+        for(int i=0; i<details.size(); i++){
+            Detail detail = details.get(i);
+            detail.update(requestDto.getDetailDtos().get(i).getPassedTime());
+        }
+
+
+        return new DetailResponseDto(exercise);
     }
 }

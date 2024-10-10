@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,7 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ExerciseResponseDto {
     private Integer memberId;
-    private Integer count;
-    private List<ExerciseDto> exercises;
+    private TypeDto typeDto;
+    private ExerciseDto exerciseDto;
 
+    public ExerciseResponseDto(Exercise exercise) {
+         memberId = exercise.getMember().getMemberId();
+         typeDto = new TypeDto(exercise.getType());
+         exerciseDto = new ExerciseDto(exercise);
+    }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 public class ExerciseDto {
 
     private Integer exerciseId;
-
     private LocalTime targetTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

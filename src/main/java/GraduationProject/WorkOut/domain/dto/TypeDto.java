@@ -13,17 +13,17 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TypeDto {
-    private Integer id;
+    private Integer typeId;
     private TypeStatus name;
 
     public TypeDto(@NotNull Type type){
-        this.id = type.getTypeId();
+        this.typeId = type.getTypeId();
         this.name = type.getName();
     }
 
     public Type toEntity(){
         return Type.builder()
-                .typeId(this.id)
+                .typeId(this.typeId)
                 .name(this.name)
                 .build();
     }
