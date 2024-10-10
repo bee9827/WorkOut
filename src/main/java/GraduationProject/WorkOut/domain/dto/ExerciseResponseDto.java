@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExerciseResponseDto {
-    private Integer member_id;
+    private Integer memberId;
     private Integer count;
     private List<ExerciseDto> exercises;
 

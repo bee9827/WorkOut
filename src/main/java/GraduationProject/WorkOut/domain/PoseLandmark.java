@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class PoseLandmark {
     @Id
     @GeneratedValue
-    @Column(name = "pose_landmark_id")
-    private Integer id;
+    private Integer PoseLandmarkId;
 
 }

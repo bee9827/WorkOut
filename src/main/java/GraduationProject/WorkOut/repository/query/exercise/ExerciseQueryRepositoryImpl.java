@@ -24,7 +24,7 @@ public class ExerciseQueryRepositoryImpl implements ExerciseQueryRepository {
 
         return queryFactory
                 .selectFrom(exercise)
-                .where(exercise.member.id.eq(member_id))
+                .where(exercise.member.memberId.eq(member_id))
                 .where(exercise.startTime.between(date,date.plusMonths(1)))
                 .fetch();
     }

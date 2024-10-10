@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -11,8 +14,7 @@ import lombok.NoArgsConstructor;
 public class Member {
     @Id
     @GeneratedValue
-    @Column(name = "member_id")
-    private Integer id;
+    private Integer memberId;
 
     //멤버 권한관련 수정필요!
 
@@ -20,8 +22,10 @@ public class Member {
     private String email;
     private String phone;
     private String password;
-    private String createdDate;
-    private String updatedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
+
+    @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
 }

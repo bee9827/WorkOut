@@ -1,18 +1,24 @@
 package GraduationProject.WorkOut.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class Detail {
     @Id
     @GeneratedValue
-    @Column(name = "datail_id")
-    private Integer id;
+    private Integer detailId;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="exercise_id")
+    @Setter
+    private Exercise exercise;
 
     @OneToOne(cascade = CascadeType.ALL)
     private PoseLandmark poseLandmark;

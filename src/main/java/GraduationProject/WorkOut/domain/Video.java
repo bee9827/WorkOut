@@ -16,8 +16,7 @@ import java.time.LocalDate;
 public class Video {
     @Id
     @GeneratedValue
-    @Column(name = "video_id")
-    private Integer id;
+    private Integer videoId;
     private String originName;
     private String savedName;
     private String size;
