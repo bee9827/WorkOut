@@ -14,7 +14,7 @@ import java.util.List;
 public class ExerciseQueryRepositoryImpl implements ExerciseQueryRepository {
     private final JPAQueryFactory queryFactory;
     @Override
-    public List<Exercise> findAllByMemberIdAndMonth(Integer member_id, LocalDate month) {
+    public List<Exercise> findAllByUserIdAndMonth(Integer userId, LocalDate month) {
         QExercise exercise = QExercise.exercise;
 
         //YYYY-MM-01 설정
@@ -24,7 +24,7 @@ public class ExerciseQueryRepositoryImpl implements ExerciseQueryRepository {
 
         return queryFactory
                 .selectFrom(exercise)
-                .where(exercise.member.memberId.eq(member_id))
+                .where(exercise.users.userId.eq(userId))
                 .where(exercise.startTime.between(date,date.plusMonths(1)))
                 .fetch();
     }

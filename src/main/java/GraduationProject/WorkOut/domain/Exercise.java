@@ -1,13 +1,11 @@
 package GraduationProject.WorkOut.domain;
 
-import GraduationProject.WorkOut.domain.dto.ExerciseDto;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -25,8 +23,8 @@ public class Exercise {
     private Type type;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "user_id")
+    private Users users;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Video video;
@@ -56,10 +54,10 @@ public class Exercise {
     }
 
     @Builder
-    public Exercise(Type type, Member member, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
+    public Exercise(Type type, Users users, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
         setType(type);
         addDetails(details);
-        this.member = member;
+        this.users = users;
         this.video = video;
         this.targetTime = targetTime;
         this.startTime = startTime;

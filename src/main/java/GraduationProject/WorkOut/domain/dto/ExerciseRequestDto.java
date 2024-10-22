@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExerciseRequestDto {
-    private Integer memberId;
+    private Integer userId;
     private Integer typeId;
     private ExerciseDto exerciseDto;
     private List<DetailDto> detailDtos;

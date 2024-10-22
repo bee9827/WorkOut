@@ -11,7 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,26 +21,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExerciseController {
     private final ExerciseService exerciseService;
-    private final ExerciseRepository exerciseRepository;
 
-    @GetMapping("api/exercise")
+    @GetMapping("api/exercise/user/{userId}/date/{localDate}")
     public ResponseEntity<ExerciseListDto> getExercises(
-            @RequestParam Integer memberId,
-            @RequestParam LocalDate month) {
-        return ResponseEntity.ok(exerciseService.findAll(memberId,month));
+            @PathVariable Integer userId,
+            @PathVariable LocalDate localDate) {
+        return ResponseEntity.ok(exerciseService.findAll(userId,localDate));
     }
 
     @DeleteMapping("api/exercise/{exerciseId}")
     public ResponseEntity<Void> deleteExercise(@PathVariable Integer exerciseId) {
-        exerciseRepository.deleteById(exerciseId);
-        return ResponseEntity.ok().build();
+        exerciseService.deleteById(exerciseId);
+        return ResponseEntity.noContent().build();
     }
 
 
     @PostMapping("api/exercise/details")
     public ResponseEntity<DetailResponseDto> createExercise(@RequestBody ExerciseRequestDto exerciseRequestDto) {
-        System.out.println(exerciseRequestDto.getExerciseDto().getStartTime());
-        return ResponseEntity.status(HttpStatus.CREATED).body(exerciseService.save(exerciseRequestDto));
+        Integer exerciseId = exerciseService.create(exerciseRequestDto);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{exerciseId}")
+                .buildAndExpand(exerciseId)
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("api/exercise/{exerciseId}/details")

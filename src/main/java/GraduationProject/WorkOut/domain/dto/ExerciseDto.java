@@ -1,13 +1,11 @@
 package GraduationProject.WorkOut.domain.dto;
 
 import GraduationProject.WorkOut.domain.*;
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -31,9 +29,9 @@ public class ExerciseDto {
         this.totalCount = exercise.getTotalCount();
     }
 
-    public Exercise toEntity(Member member, Type type, List<Detail> details) {
+    public Exercise toEntity(Users users, Type type, List<Detail> details) {
         Exercise exercise = Exercise.builder()
-                .member(member)
+                .users(users)
                 .type(type)
                 .details(details)
                 .targetTime(targetTime)

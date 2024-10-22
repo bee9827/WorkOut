@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ExerciseQueryRepository {
-    public List<Exercise> findAllByMemberIdAndMonth(Integer member_id, LocalDate month);
+    public List<Exercise> findAllByUserIdAndMonth(Integer userId, LocalDate month);
 }
