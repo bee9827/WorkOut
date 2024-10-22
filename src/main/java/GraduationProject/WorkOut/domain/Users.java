@@ -40,4 +40,17 @@ public class Users {
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }
+
+    public void update(String name,String email,String password) {
+        if(name != null && !this.name.equals(name)){
+            this.name = name;
+        }
+        if(email != null && !this.email.equals(email)){
+            this.email = email;
+        }
+        if(password != null && !this.password.equals(password)){
+            this.password = password;
+        }
+        this.updatedDate = LocalDateTime.now();
+    }
 }

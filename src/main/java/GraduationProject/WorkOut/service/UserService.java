@@ -26,6 +26,15 @@ public class UserService {
                 ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));
         userRepository.deleteById(userId);
     }
+    @Transactional
+    public UserResponseDto update(UserRequestDto userRequestDto, Integer userId) {
+        Users user = userRepository.findById(userId).orElseThrow(
+                ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));
+
+        user.update(userRequestDto.getName(),userRequestDto.getEmail(),userRequestDto.getPassword());
+
+        return new UserResponseDto(user);
+    }
     public UserResponseDto findById(Integer userId) {
         Users users = userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -30,6 +31,10 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
         userService.deleteById(userId);
         return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("api/user/{userId}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable Integer userId, @RequestBody UserRequestDto userRequestDto) {
+        return ResponseEntity.ok(userService.update(userRequestDto, userId));
     }
     @GetMapping("api/user/{userId}")
     public ResponseEntity<UserResponseDto> getUser(@PathVariable Integer userId) {
