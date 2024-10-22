@@ -47,7 +47,7 @@ public class Exercise {
         }
     }
 
-    public void addDetails(List<Detail> details) {
+    public void setDetails(List<Detail> details) {
         if (details != null) {
             this.details.addAll(details);
         }
@@ -56,7 +56,7 @@ public class Exercise {
     @Builder
     public Exercise(Type type, Users users, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
         setType(type);
-        addDetails(details);
+        setDetails(details);
         this.users = users;
         this.video = video;
         this.targetTime = targetTime;

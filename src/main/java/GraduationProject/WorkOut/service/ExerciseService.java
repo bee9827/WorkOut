@@ -31,7 +31,7 @@ public class ExerciseService {
         userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(
                         String.format("User[%d] not found", userId)));
-        
+
         List<Exercise> exercises = exerciseRepository.findAllByUserIdAndMonth(userId, month);
         return new ExerciseListDto(exercises.stream().map(ExerciseResponseDto::new).toList());
     }
@@ -60,7 +60,7 @@ public class ExerciseService {
                 .toEntity(users,type,null);
 
 
-        exercise.addDetails(details);
+        exercise.setDetails(details);
         exerciseRepository.save(exercise);
 
        return exercise.getExerciseId();
