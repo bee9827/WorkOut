@@ -1,6 +1,6 @@
 package GraduationProject.WorkOut.domain.dto;
 
-import GraduationProject.WorkOut.domain.Users;
+import GraduationProject.WorkOut.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,8 +17,8 @@ public class UserRequestDto {
     private String phoneNumber;
     private String password;
 
-    public Users toEntity(){
-        return Users.builder()
+    public User toEntity(){
+        return User.builder()
                 .name(this.name)
                 .email(this.email)
                 .phoneNumber(this.phoneNumber)

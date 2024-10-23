@@ -14,7 +14,7 @@ public class ExerciseResponseDto {
     private ExerciseDto exerciseDto;
 
     public ExerciseResponseDto(Exercise exercise) {
-         userId = exercise.getUsers().getUserId();
+         userId = exercise.getUser().getUserId();
          typeDto = new TypeDto(exercise.getType());
          exerciseDto = new ExerciseDto(exercise);
     }

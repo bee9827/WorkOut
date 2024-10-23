@@ -16,7 +16,6 @@ public class ExerciseDto {
     private LocalTime targetTime;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-
     private Integer targetCount;
     private Integer totalCount;
 
@@ -29,9 +28,9 @@ public class ExerciseDto {
         this.totalCount = exercise.getTotalCount();
     }
 
-    public Exercise toEntity(Users users, Type type, List<Detail> details) {
-        Exercise exercise = Exercise.builder()
-                .users(users)
+    public Exercise toEntity(User user, Type type, List<Detail> details) {
+        return Exercise.builder()
+                .user(user)
                 .type(type)
                 .details(details)
                 .targetTime(targetTime)
@@ -40,7 +39,5 @@ public class ExerciseDto {
                 .targetCount(targetCount)
                 .totalCount(totalCount)
                 .build();
-
-        return exercise;
     }
 }

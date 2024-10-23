@@ -1,6 +1,6 @@
 package GraduationProject.WorkOut.service;
 
-import GraduationProject.WorkOut.domain.Users;
+import GraduationProject.WorkOut.domain.User;
 import GraduationProject.WorkOut.domain.dto.UserRequestDto;
 import GraduationProject.WorkOut.domain.dto.UserResponseDto;
 import GraduationProject.WorkOut.exception.NotFoundException;
@@ -17,18 +17,18 @@ public class UserService {
 
     @Transactional
     public Integer create(UserRequestDto userRequestDto) {
-        Users users = userRepository.save(userRequestDto.toEntity());
-        return users.getUserId();
+        User user = userRepository.save(userRequestDto.toEntity());
+        return user.getUserId();
     }
     @Transactional
     public void deleteById(Integer userId) {
-        Users users = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));
         userRepository.deleteById(userId);
     }
     @Transactional
     public UserResponseDto update(UserRequestDto userRequestDto, Integer userId) {
-        Users user = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));
 
         user.update(userRequestDto.getName(),userRequestDto.getEmail(),userRequestDto.getPassword());
@@ -36,9 +36,9 @@ public class UserService {
         return new UserResponseDto(user);
     }
     public UserResponseDto findById(Integer userId) {
-        Users users = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(String.format("UserId[%d] not found",userId)));
-        return new UserResponseDto(users);
+        return new UserResponseDto(user);
     }
 
 }

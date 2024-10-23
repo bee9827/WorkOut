@@ -12,7 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue
     private Integer userId;
@@ -30,7 +31,7 @@ public class Users {
     private LocalDateTime updatedDate;
 
     @Builder
-    public Users(Integer userId, String name, String email, String phoneNumber, String password, boolean activated, LocalDateTime createdDate, LocalDateTime updatedDate) {
+    public User(Integer userId, String name, String email, String phoneNumber, String password, boolean activated, LocalDateTime createdDate, LocalDateTime updatedDate) {
         this.userId = userId;
         this.name = name;
         this.email = email;

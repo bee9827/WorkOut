@@ -15,7 +15,7 @@ public class DetailResponseDto {
     List<DetailDto> detailDtos;
 
     public DetailResponseDto(Exercise exercise) {
-        userId = exercise.getUsers().getUserId();
+        userId = exercise.getUser().getUserId();
         typeDto = new TypeDto(exercise.getType());
         exerciseDto = new ExerciseDto(exercise);
         detailDtos = exercise.getDetails().stream().map(DetailDto::new).toList();

@@ -2,7 +2,7 @@ package GraduationProject.WorkOut.service;
 
 import GraduationProject.WorkOut.domain.Detail;
 import GraduationProject.WorkOut.domain.Exercise;
-import GraduationProject.WorkOut.domain.Users;
+import GraduationProject.WorkOut.domain.User;
 import GraduationProject.WorkOut.domain.Type;
 import GraduationProject.WorkOut.domain.dto.*;
 import GraduationProject.WorkOut.exception.NotFoundException;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -43,7 +42,7 @@ public class ExerciseService {
 
     @Transactional
     public Integer create(ExerciseRequestDto requestDto) {
-        Users users = userRepository
+        User user = userRepository
                 .findById(requestDto.getUserId())
                 .orElseThrow(() -> new NotFoundException(String.format("User[%d] not found", requestDto.getUserId())));
         Type type = typeRepository
@@ -57,7 +56,7 @@ public class ExerciseService {
                     .toList();
         Exercise exercise =
                 requestDto.getExerciseDto()
-                .toEntity(users,type,null);
+                .toEntity(user,type,null);
 
 
         exercise.setDetails(details);

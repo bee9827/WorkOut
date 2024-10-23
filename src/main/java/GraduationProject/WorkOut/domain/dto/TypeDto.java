@@ -2,6 +2,7 @@ package GraduationProject.WorkOut.domain.dto;
 
 import GraduationProject.WorkOut.domain.Type;
 import GraduationProject.WorkOut.domain.TypeStatus;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.AssertTrue;
 import lombok.AllArgsConstructor;
 import lombok.Data;

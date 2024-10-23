@@ -24,7 +24,7 @@ public class Exercise {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private User user;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Video video;
@@ -54,10 +54,10 @@ public class Exercise {
     }
 
     @Builder
-    public Exercise(Type type, Users users, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
+    public Exercise(Type type, User user, Video video, List<Detail> details, LocalTime targetTime, LocalDateTime startTime, LocalDateTime endTime, Integer targetCount, Integer totalCount) {
         setType(type);
         setDetails(details);
-        this.users = users;
+        this.user = user;
         this.video = video;
         this.targetTime = targetTime;
         this.startTime = startTime;
