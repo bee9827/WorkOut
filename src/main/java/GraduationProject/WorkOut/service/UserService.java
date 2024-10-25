@@ -1,6 +1,7 @@
 package GraduationProject.WorkOut.service;
 
 import GraduationProject.WorkOut.domain.User;
+import GraduationProject.WorkOut.domain.dto.UserListDto;
 import GraduationProject.WorkOut.domain.dto.UserRequestDto;
 import GraduationProject.WorkOut.domain.dto.UserResponseDto;
 import GraduationProject.WorkOut.exception.NotFoundException;
@@ -8,6 +9,8 @@ import GraduationProject.WorkOut.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -41,4 +44,12 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
+    public UserListDto findAll() {
+        List<UserResponseDto> userResponseDtos = userRepository.findAll()
+                .stream()
+                .map(UserResponseDto::new)
+                .toList();
+
+        return new UserListDto(userResponseDtos);
+    }
 }
