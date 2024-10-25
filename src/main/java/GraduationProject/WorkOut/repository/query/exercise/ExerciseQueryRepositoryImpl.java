@@ -13,19 +13,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ExerciseQueryRepositoryImpl implements ExerciseQueryRepository {
     private final JPAQueryFactory queryFactory;
+
     @Override
-    public List<Exercise> findAllByUserIdAndMonth(Integer userId, LocalDate month) {
+    public List<Exercise> findMonthAgoByUserId(Integer userId,int ago) {
         QExercise exercise = QExercise.exercise;
 
-        //YYYY-MM-01 설정
-        month = month.withDayOfMonth(1);
         //데이터 형식 맞추기, YYYY-MM-DDT00:00:00 설정
-        LocalDateTime date = month.atStartOfDay();
+        LocalDateTime startOfLastMonth = LocalDate.now()
+                .minusMonths(1+ago)
+                .withDayOfMonth(1)
+                .atStartOfDay();
+        LocalDateTime endOfLastMonth = LocalDate.now()
+                .minusMonths(ago)
+                .withDayOfMonth(1)
+                .atStartOfDay();
 
         return queryFactory
                 .selectFrom(exercise)
                 .where(exercise.user.userId.eq(userId))
-                .where(exercise.startTime.between(date,date.plusMonths(1)))
+                .where(exercise.startTime.between(startOfLastMonth, endOfLastMonth))
                 .fetch();
     }
 }

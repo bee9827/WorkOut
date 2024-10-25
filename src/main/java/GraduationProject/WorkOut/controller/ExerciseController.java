@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,11 +28,10 @@ public class ExerciseController {
         return ResponseEntity.ok(exerciseService.findAll());
     }
 
-    @GetMapping("api/exercises/users/{userId}/dates/{localDate}")
-    public ResponseEntity<ExerciseListDto> getExercises(
-            @PathVariable Integer userId,
-            @PathVariable LocalDate localDate) {
-        return ResponseEntity.ok(exerciseService.findAllByUserIdAndMonth(userId,localDate));
+    @GetMapping("api/exercises/users/{userId}")
+    public ResponseEntity<Map<LocalDate,ExerciseListDto>> getThisMonthAndLastMonthExercises(
+            @PathVariable Integer userId) {
+        return ResponseEntity.ok(exerciseService.findThisMonthAndLastMonthByUserId(userId));
     }
 
     @DeleteMapping("api/exercises/{exerciseId}")

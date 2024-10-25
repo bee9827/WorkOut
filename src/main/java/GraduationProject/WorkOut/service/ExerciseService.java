@@ -11,12 +11,16 @@ import GraduationProject.WorkOut.repository.ExerciseRepository;
 import GraduationProject.WorkOut.repository.UserRepository;
 import GraduationProject.WorkOut.repository.TypeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,13 +31,27 @@ public class ExerciseService {
     private final TypeRepository typeRepository;
     private final DetailRepository detailRepository;
 
-    public ExerciseListDto findAllByUserIdAndMonth(Integer userId, LocalDate month) {
+    public Map<LocalDate,ExerciseListDto> findThisMonthAndLastMonthByUserId(Integer userId) {
         userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(
                         String.format("User[%d] not found", userId)));
 
-        List<Exercise> exercises = exerciseRepository.findAllByUserIdAndMonth(userId, month);
-        return new ExerciseListDto(exercises.stream().map(ExerciseResponseDto::new).toList());
+        LocalDate thisMonth = LocalDate.now().minusMonths(1);
+        LocalDate lastMonth = LocalDate.now().minusMonths(1);
+
+        List<ExerciseResponseDto> thisMonthExercisesDto = exerciseRepository.findMonthAgoByUserId(userId,0)
+                .stream()
+                .map(ExerciseResponseDto::new)
+                .toList();
+        List<ExerciseResponseDto> lastMonthExercisesDto = exerciseRepository.findMonthAgoByUserId(userId,1)
+                .stream()
+                .map(ExerciseResponseDto::new)
+                .toList();
+        Map<LocalDate,ExerciseListDto> exerciseListDtoMap = new HashMap<>();
+        exerciseListDtoMap.put(thisMonth,new ExerciseListDto(thisMonthExercisesDto));
+        exerciseListDtoMap.put(lastMonth,new ExerciseListDto(lastMonthExercisesDto));
+
+        return exerciseListDtoMap;
     }
     public DetailResponseDto findAllDetailByExerciseId(Integer exerciseId) {
         Exercise exercise = exerciseRepository.findById(exerciseId)
