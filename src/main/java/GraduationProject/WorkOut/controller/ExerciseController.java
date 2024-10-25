@@ -22,11 +22,16 @@ import java.util.List;
 public class ExerciseController {
     private final ExerciseService exerciseService;
 
+    @GetMapping("api/exercises")
+    public ResponseEntity<ExerciseListDto> getAllExercises() {
+        return ResponseEntity.ok(exerciseService.findAll());
+    }
+
     @GetMapping("api/exercises/users/{userId}/dates/{localDate}")
     public ResponseEntity<ExerciseListDto> getExercises(
             @PathVariable Integer userId,
             @PathVariable LocalDate localDate) {
-        return ResponseEntity.ok(exerciseService.findAll(userId,localDate));
+        return ResponseEntity.ok(exerciseService.findAllByUserIdAndMonth(userId,localDate));
     }
 
     @DeleteMapping("api/exercises/{exerciseId}")

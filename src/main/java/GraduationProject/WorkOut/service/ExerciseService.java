@@ -11,6 +11,7 @@ import GraduationProject.WorkOut.repository.ExerciseRepository;
 import GraduationProject.WorkOut.repository.UserRepository;
 import GraduationProject.WorkOut.repository.TypeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class ExerciseService {
     private final TypeRepository typeRepository;
     private final DetailRepository detailRepository;
 
-    public ExerciseListDto findAll(Integer userId, LocalDate month) {
+    public ExerciseListDto findAllByUserIdAndMonth(Integer userId, LocalDate month) {
         userRepository.findById(userId).orElseThrow(
                 ()-> new NotFoundException(
                         String.format("User[%d] not found", userId)));
@@ -91,5 +92,13 @@ public class ExerciseService {
                         String.format("Exercise[%d] not found", exerciseId)));
 
         exerciseRepository.deleteById(exerciseId);
+    }
+
+    public ExerciseListDto findAll() {
+        List<ExerciseResponseDto> exerciseResponseDtos = exerciseRepository.findAll()
+                .stream()
+                .map(ExerciseResponseDto::new)
+                .toList();
+        return new ExerciseListDto(exerciseResponseDtos);
     }
 }
