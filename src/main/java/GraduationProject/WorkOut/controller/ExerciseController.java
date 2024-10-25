@@ -22,21 +22,21 @@ import java.util.List;
 public class ExerciseController {
     private final ExerciseService exerciseService;
 
-    @GetMapping("api/exercise/user/{userId}/date/{localDate}")
+    @GetMapping("api/exercises/users/{userId}/dates/{localDate}")
     public ResponseEntity<ExerciseListDto> getExercises(
             @PathVariable Integer userId,
             @PathVariable LocalDate localDate) {
         return ResponseEntity.ok(exerciseService.findAll(userId,localDate));
     }
 
-    @DeleteMapping("api/exercise/{exerciseId}")
+    @DeleteMapping("api/exercises/{exerciseId}")
     public ResponseEntity<Void> deleteExercise(@PathVariable Integer exerciseId) {
         exerciseService.deleteById(exerciseId);
         return ResponseEntity.noContent().build();
     }
 
 
-    @PostMapping("api/exercise/details")
+    @PostMapping("api/exercises/details")
     public ResponseEntity<DetailResponseDto> createExercise(@RequestBody ExerciseRequestDto exerciseRequestDto) {
         Integer exerciseId = exerciseService.create(exerciseRequestDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -46,12 +46,12 @@ public class ExerciseController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("api/exercise/{exerciseId}/details")
+    @GetMapping("api/exercises/{exerciseId}/details")
     public ResponseEntity<DetailResponseDto> getDetails(@PathVariable Integer exerciseId) {
         return ResponseEntity.ok(exerciseService.findAllDetailByExerciseId(exerciseId));
     }
 
-    @PatchMapping("api/exercise/details")
+    @PatchMapping("api/exercises/details")
     public ResponseEntity<DetailResponseDto> updateDetails(@RequestBody ExerciseRequestDto exerciseRequestDto) {
         return ResponseEntity.ok(exerciseService.update(exerciseRequestDto));
     }

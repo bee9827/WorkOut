@@ -41,7 +41,7 @@ public class Exercise {
     private Integer totalCount;
 
     public void setType(Type type) {
-        if(type != null && !this.type.equals(type)) {
+        if(type != null && !type.equals(this.type)) {
             this.type = type;
             type.getExercise().add(this);
         }

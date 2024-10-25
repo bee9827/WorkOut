@@ -43,13 +43,13 @@ public class User {
     }
 
     public void update(String name,String email,String password) {
-        if(name != null && !this.name.equals(name)){
+        if(name != null && !name.equals(this.name)){
             this.name = name;
         }
-        if(email != null && !this.email.equals(email)){
+        if(email != null && !email.equals(this.email)){
             this.email = email;
         }
-        if(password != null && !this.password.equals(password)){
+        if(password != null && !password.equals(this.password)){
             this.password = password;
         }
         this.updatedDate = LocalDateTime.now();
